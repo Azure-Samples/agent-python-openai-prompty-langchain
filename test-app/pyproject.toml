@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "test-app"
+version = "0.1.0"
+description = ""
+authors = ["Chuyuan Qu <chuyuanqu@microsoft.com>"]
+readme = "README.md"
+packages = [
+    { include = "app" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+uvicorn = "^0.23.2"
+langserve = {extras = ["server"], version = ">=0.0.30"}
+pydantic = "^2.6.1"
+openai-functions-agent = {path = "packages/openai-functions-agent", develop = true}
+rag-elasticsearch = {path = "packages/rag-elasticsearch", develop = true}
+prompty = {path = "/mnt/c/src/prompty", develop = true}
+python-dotenv = "^1.0.1"
+
+
+[tool.poetry.group.dev.dependencies]
+langchain-cli = ">=0.0.15"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
