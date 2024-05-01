@@ -1,47 +1,36 @@
-from openai_functions_agent.langchain_prompty import create_chat_prompt
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_openai import AzureChatOpenAI
-import langchain
-# langchain.verbose = True
-# langchain.debug = True
-# langchain.llm_cache = False
-from typing import Dict
-import os
-
-# Import things that are needed generically
-from langchain.pydantic_v1 import BaseModel, Field
-from langchain.tools import BaseTool, StructuredTool, tool
-from langchain_community.tools.convert_to_openai import format_tool_to_openai_function
-from langchain_core.messages import AIMessage, HumanMessage
-from langchain_core.messages.base import BaseMessage
 from typing import List, Tuple
+
+from langchain.agents import AgentExecutor
 from langchain.agents.format_scratchpad import format_to_openai_function_messages
 from langchain.agents.output_parsers import OpenAIFunctionsAgentOutputParser
+from langchain_community.chat_models import ChatOpenAI
+from langchain_community.tools.convert_to_openai import format_tool_to_openai_function
+from langchain_community.tools.tavily_search import TavilySearchResults
+from langchain_community.utilities.tavily_search import TavilySearchAPIWrapper
+from langchain_core.messages import AIMessage, HumanMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_core.pydantic_v1 import BaseModel, Field
+from langchain_openai import AzureChatOpenAI
 
-@tool
-def search(query: str) -> str:
-    """Look up things online."""
-    return "Thea meaning of life is Microsoft"
+tools = []
+
+import os
+from openai_functions_agent.langchain_prompty import create_chat_prompt
+prompt = create_chat_prompt(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'basic_chat.prompty'))
 
 llm = AzureChatOpenAI(
-    openai_api_version="2023-12-01-preview",
-    azure_deployment="gpt-4",
+    azure_deployment=os.getenv('AZURE_DEPLOYMENT')
 )
 
-tools = [search]
-llm_with_tools = llm.bind(functions=[format_tool_to_openai_function(t) for t in tools])
+llm_with_tools = llm #llm.bind(functions=[format_tool_to_openai_function(t) for t in tools])
+
 
 def _format_chat_history(chat_history: List[Tuple[str, str]]):
     buffer = []
     for human, ai in chat_history:
-        buffer.append({"role": 'user', "content": human})
-        buffer.append({"role": 'assistant', "content": ai})
+        buffer.append(HumanMessage(content=human))
+        buffer.append(AIMessage(content=ai))
     return buffer
-
-from langchain_core.runnables import RunnableLambda
-
-run_prompty = create_chat_prompt(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'basic_chat.prompty'))
 
 agent = (
     {
@@ -51,12 +40,11 @@ agent = (
             x["intermediate_steps"]
         ),
     }
-    | run_prompty
+    | prompt
     | llm_with_tools
     | OpenAIFunctionsAgentOutputParser()
 )
 
-from langchain.agents import AgentExecutor
 
 class AgentInput(BaseModel):
     input: str

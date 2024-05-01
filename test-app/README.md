@@ -1,4 +1,8 @@
 # demo
+This sample based on https://github.com/langchain-ai/langchain/blob/master/templates/openai-functions-agent. The modification we have are:
+* Switch to use **Prompty**
+* Use **AzureChatOpenAI** instead of **ChatOpenAI**
+* Change tool to ElasticSearh
 
 ## Installation
 

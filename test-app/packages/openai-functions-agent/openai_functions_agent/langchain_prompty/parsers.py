@@ -6,7 +6,7 @@ from .core import Invoker, InvokerFactory, Prompty, SimpleModel, NoOpParser
 class PromptyChatParser(Invoker):
     def __init__(self, prompty: Prompty) -> None:
         self.prompty = prompty
-        self.roles = ["assistant", "function", "system", "user"]
+        self.roles = ["assistant", "function", "system", "user", "human", "ai"]
         self.path = self.prompty.file.parent
 
     def inline_image(self, image_item: str) -> str:
