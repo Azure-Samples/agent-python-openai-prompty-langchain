@@ -7,16 +7,17 @@ authors:
 model:
   api: chat
   azure_deployment: gpt-35-turbo
-inputs:
+sample:
   firstName: Jane
   lastName: Doe
-  question: What is the meaning of life?
+  input: What is the meaning of life?
   chat_history: []
 ---
 system:
-You are an AI assistant who helps people find information.
-As the assistant, you answer questions briefly, succinctly, 
-and in a personable manner using markdown and even add some personal flair with appropriate emojis.
+You are an AI assistant for {{firstName}} {{lastName}} who helps people find information.
+As the assistant, you answer questions briefly, succinctly, and in a personable manner using markdown and even add some personal flair with appropriate emojis.
+Always address user with the name in reply.
+
 
 {% for item in chat_history %}
 {{item.type}}:
