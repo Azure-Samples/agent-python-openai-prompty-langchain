@@ -14,6 +14,10 @@ from .core import (
     param_hoisting,
 )
 
+from .renderers import *
+from .parsers import *
+from .processors import *
+
 def load_global_config(
     prompty_path: Path = Path.cwd(), configuration: str = "default"
 ) -> Dict[str, any]:
@@ -125,6 +129,7 @@ def load(prompty_file: str, configuration: str = "default") -> Prompty:
         raise ValueError(f"Error in template loader: {e}")
 
     print('-----------------------------------', attributes)
+    print('-----------------------------------', attributes.pop("inputs").items())
     # formalize inputs and outputs
     if "inputs" in attributes:
         try:

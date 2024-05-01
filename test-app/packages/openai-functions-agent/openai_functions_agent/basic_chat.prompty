@@ -4,8 +4,8 @@ description: A basic prompt that uses the GPT-3 chat API to answer questions
 authors:
   - sethjuarez
   - jietong
-api: chat
 model:
+  api: chat
   azure_deployment: gpt-35-turbo
 inputs:
   firstName: Jane

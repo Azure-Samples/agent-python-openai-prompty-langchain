@@ -227,7 +227,7 @@ class InvokerFactory(object):
         prompty: Prompty,
         data: BaseModel,
     ) -> BaseModel:
-
+        print('_---------- call', type, name)
         if type == "renderer":
             return self._renderers[name](prompty)(data)
         elif type == "parser":

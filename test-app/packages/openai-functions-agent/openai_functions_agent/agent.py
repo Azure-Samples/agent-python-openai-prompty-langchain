@@ -1,10 +1,10 @@
-from .langchain_prompty import create_chat_prompt
+from openai_functions_agent.langchain_prompty import create_chat_prompt
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import AzureChatOpenAI
 import langchain
-langchain.verbose = True
-langchain.debug = True
-langchain.llm_cache = False
+# langchain.verbose = True
+# langchain.debug = True
+# langchain.llm_cache = False
 from typing import Dict
 import os
 
@@ -32,12 +32,6 @@ llm = AzureChatOpenAI(
 tools = [search]
 llm_with_tools = llm.bind(functions=[format_tool_to_openai_function(t) for t in tools])
 
-def _format_chat_history(chat_history: List[BaseMessage]):
-    print('_format_chat_history', chat_history)
-    buffer = []
-    for x in chat_history:
-        buffer.append({"role": x.type, "content": x.content})
-    return buffer
 
 def _format_chat_history(chat_history: List[Tuple[str, str]]):
     buffer = []
@@ -53,7 +47,7 @@ run_prompty = create_chat_prompt(os.path.join(os.path.dirname(os.path.abspath(__
 agent = (
     {
         "input": lambda x: x["input"],
-        "chat_history": lambda x: _format_chat_history(x["chat_history"]),
+        "chat_history": lambda x: x["chat_history"],
         "agent_scratchpad": lambda x: format_to_openai_function_messages(
             x["intermediate_steps"]
         ),
@@ -75,4 +69,3 @@ class AgentInput(BaseModel):
 agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True).with_types(
     input_type=AgentInput
 )
-
