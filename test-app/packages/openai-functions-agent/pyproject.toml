@@ -12,7 +12,6 @@ python = "^3.11"
 langchain = "^0.1"
 openai = "<2"
 tavily-python = "^0.1.9"
-langchain-prompty = {path = "/mnt/c/src/prompty/libs/langchain-prompty", develop = true}
 langchain-openai = "^0.1.1"
 
 [tool.poetry.group.dev.dependencies]

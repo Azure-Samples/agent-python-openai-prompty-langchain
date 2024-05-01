@@ -1,4 +1,4 @@
-import langchain_prompty
+from .langchain_prompty import create_chat_prompt
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import AzureChatOpenAI
 import langchain
@@ -6,6 +6,7 @@ langchain.verbose = True
 langchain.debug = True
 langchain.llm_cache = False
 from typing import Dict
+import os
 
 # Import things that are needed generically
 from langchain.pydantic_v1 import BaseModel, Field
@@ -46,8 +47,8 @@ def _format_chat_history(chat_history: List[Tuple[str, str]]):
     return buffer
 
 from langchain_core.runnables import RunnableLambda
-run_prompty = langchain_prompty.create_chat_prompt("/mnt/c/src/langserve-test/packages/openai-functions-agent/openai_functions_agent/basic_chat.prompty")
 
+run_prompty = create_chat_prompt(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'basic_chat.prompty'))
 
 agent = (
     {
