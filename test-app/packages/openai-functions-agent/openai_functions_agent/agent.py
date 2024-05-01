@@ -32,7 +32,6 @@ llm = AzureChatOpenAI(
 tools = [search]
 llm_with_tools = llm.bind(functions=[format_tool_to_openai_function(t) for t in tools])
 
-
 def _format_chat_history(chat_history: List[Tuple[str, str]]):
     buffer = []
     for human, ai in chat_history:
@@ -47,7 +46,7 @@ run_prompty = create_chat_prompt(os.path.join(os.path.dirname(os.path.abspath(__
 agent = (
     {
         "input": lambda x: x["input"],
-        "chat_history": lambda x: x["chat_history"],
+        "chat_history": lambda x: _format_chat_history(x["chat_history"]),
         "agent_scratchpad": lambda x: format_to_openai_function_messages(
             x["intermediate_steps"]
         ),
