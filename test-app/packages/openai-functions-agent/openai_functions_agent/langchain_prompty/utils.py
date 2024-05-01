@@ -17,66 +17,6 @@ from .core import (
 from .renderers import *
 from .parsers import *
 
-def load_global_config(
-    prompty_path: Path = Path.cwd(), configuration: str = "default"
-) -> Dict[str, any]:
-    # prompty.config laying around?
-    prompty_config = list(Path.cwd().glob("**/prompty.json"))
-
-    # if there is one load it
-    if len(prompty_config) > 0:
-        # pick the nearest prompty.json
-        config = sorted(
-            [
-                c
-                for c in prompty_config
-                if len(c.parent.parts) <= len(prompty_path.parts)
-            ],
-            key=lambda p: len(p.parts),
-        )[-1]
-
-        span = current_span()
-        span.add_event(
-            "Using prompty.json for connection information",
-            attributes={
-                "file": str(Path(config).as_posix()),
-                "connection": configuration,
-            },
-        )
-        with open(config, "r") as f:
-            c = json.load(f)
-            if configuration in c:
-                return c[configuration]
-            else:
-                raise ValueError(f'Item "{configuration}" not found in "{config}"')
-
-    return {}
-
-
-def headless(
-    api: str,
-    content: str | List[str] | dict,
-    configuration: Dict[str, any] = {},
-    parameters: Dict[str, any] = {},
-    connection: str = "default",
-) -> Prompty:
-    # get caller's path (to get relative path for prompty.json)
-    caller = Path(traceback.extract_stack()[-2].filename)
-    templateSettings = TemplateSettings(type="NOOP", parser="NOOP")
-    modelSettings = ModelSettings(
-        api=api,
-        configuration=Prompty.normalize(
-            param_hoisting(
-                configuration, load_global_config(caller.parent, connection)
-            ),
-            caller.parent,
-        ),
-        parameters=parameters,
-    )
-
-    return Prompty(model=modelSettings, template=templateSettings, content=content)
-
-
 def load(prompty_file: str, configuration: str = "default") -> Prompty:
     p = Path(prompty_file)
     if not p.is_absolute():
@@ -93,20 +33,9 @@ def load(prompty_file: str, configuration: str = "default") -> Prompty:
     attributes = Prompty.normalize(attributes, p.parent)
 
     # load global configuration
-    global_config = Prompty.normalize(
-        load_global_config(p.parent, configuration), p.parent
-    )
     if "model" not in attributes:
         attributes["model"] = {}
         
-    if "configuration" not in attributes["model"]:
-        attributes["model"]["configuration"] = global_config
-    else:
-        attributes["model"]["configuration"] = param_hoisting(
-            attributes["model"]["configuration"],
-            global_config,
-        )
-
     # pull model settings out of attributes
     try:
         model = ModelSettings(**attributes.pop("model"))
@@ -150,8 +79,6 @@ def load(prompty_file: str, configuration: str = "default") -> Prompty:
     # recursive loading of base prompty
     if "base" in attributes:
         # load the base prompty from the same directory as the current prompty
-        span = current_span()
-        span.add_event(f"Recursively loading base prompty {attributes['base']}")
         base = load(p.parent / attributes["base"])
         # hoist the base prompty's attributes to the current prompty
         model.api = base.model.api if model.api == "" else model.api
@@ -281,8 +208,6 @@ def execute(
         prompt = load(path, connection)
 
     invoker = InvokerFactory()
-    span = current_span()
-    span.set_attribute("invokers", invoker.to_json())
 
     # prepare content
     content = prepare(prompt, inputs)
