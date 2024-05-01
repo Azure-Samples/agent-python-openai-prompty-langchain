@@ -15,7 +15,7 @@ from langchain_openai import AzureChatOpenAI
 tools = []
 
 import os
-from openai_functions_agent.langchain_prompty import create_chat_prompt
+from .langchain_prompty import create_chat_prompt
 prompt = create_chat_prompt(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'basic_chat.prompty'))
 
 llm = AzureChatOpenAI(
