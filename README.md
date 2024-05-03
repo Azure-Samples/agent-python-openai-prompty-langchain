@@ -1,4 +1,4 @@
-# Langchain+Prompyt+Pinecone
+# Langchain+Prompty+Pinecone
 
 ## How to run locally
 
