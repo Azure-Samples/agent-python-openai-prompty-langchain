@@ -25,7 +25,8 @@ In order to host this app, you need to have:
 1. set environment variables(on Windows)
 
 ```ps1
-$Env:PINECONE_API_KEY = <your pinecone api key>
+$Env:ELASTICSEARCH_ENDPOINT = <your elastic search endpoint>
+$Env:ELASTICSEARCH_API_KEY = <your elastic search API key(encoded)>
 $Env:AZURE_OPENAI_API_KEY= <your aoai api key>
 $Env:AZURE_OPENAI_ENDPOINT= <your aoai endpoint>
 $Env:OPENAI_API_VERSION= <your aoai api version>
