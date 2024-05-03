@@ -14,9 +14,6 @@ async def redirect_root_to_docs():
 from openai_functions_agent import agent_executor as openai_functions_agent_chain
 add_routes(app, openai_functions_agent_chain, path="/openai-functions-agent")
 
-# from rag_elasticsearch import chain as rag_elasticsearch_chain
-# add_routes(app, rag_elasticsearch_chain, path="/rag-elasticsearch")
-
 if __name__ == "__main__":
     import uvicorn
 

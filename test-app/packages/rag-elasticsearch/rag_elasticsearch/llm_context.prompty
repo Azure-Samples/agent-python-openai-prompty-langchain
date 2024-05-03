@@ -1,9 +1,0 @@
-Use the following passages to answer the user's question.
-Each passage has a SOURCE which is the title of the document. When answering, cite source name of the passages you are answering from below the answer in a unique bullet point list.
-
-If you don't know the answer, just say that you don't know, don't try to make up an answer.
-
-----
-{context}
-----
-Question: {question}
