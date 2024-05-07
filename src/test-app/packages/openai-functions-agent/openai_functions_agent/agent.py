@@ -18,12 +18,17 @@ from langchain_elasticsearch import ElasticsearchStore
 import os
 from .langchain_prompty import create_chat_prompt
 from langchain_text_splitters import CharacterTextSplitter
+from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 # Define the arguments schema model
 class SearchQueryArgs(BaseModel):
     query: str = Field(..., example="What is the current state of the stock market?")
 
+token_provider = get_bearer_token_provider(
+        DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default"
+    )
+
 def prepare_search_client(local_load: bool = False):
-    embeddings = AzureOpenAIEmbeddings(azure_endpoint=os.getenv('AZURE_OPENAI_ENDPOINT'), deployment=os.getenv('AZURE_OPENAI_EMBEDDING_DEPLOYMENT'))
+    embeddings = AzureOpenAIEmbeddings(azure_endpoint=os.getenv('AZURE_OPENAI_ENDPOINT'), deployment=os.getenv('AZURE_OPENAI_EMBEDDING_DEPLOYMENT'), azure_ad_token_provider=token_provider)
     index_name = "langchain-test-index"
     if local_load:
         loader = TextLoader(os.path.join(os.path.dirname(os.path.abspath(__file__)), './data/documents.json'))
@@ -55,7 +60,8 @@ elastic_search = StructuredTool.from_function(
 )
 
 llm = AzureChatOpenAI(
-    azure_deployment=os.getenv('AZURE_DEPLOYMENT')
+    azure_deployment=os.getenv('AZURE_DEPLOYMENT'),
+    azure_ad_token_provider=token_provider
 )
 tools = [elastic_search]
 llm_with_tools = llm.bind(functions=[format_tool_to_openai_function(t) for t in tools])
