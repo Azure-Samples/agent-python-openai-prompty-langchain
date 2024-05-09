@@ -1,4 +1,4 @@
-# Langchain+Prompty+Pinecone
+# Langchain+Prompty+ElasticSearch
 
 ## How to run locally
 
