@@ -1,4 +1,4 @@
-# Langchain+Prompyt+Pinecone
+# Langchain+Prompyt+ElasticSearch
 
 ## How to run locally
 
@@ -25,12 +25,12 @@ In order to host this app, you need to have:
 1. set environment variables(on Windows)
 
 ```ps1
-$Env:PINECONE_API_KEY = <your pinecone api key>
-$Env:AZURE_OPENAI_API_KEY= <your aoai api key>
 $Env:AZURE_OPENAI_ENDPOINT= <your aoai endpoint>
 $Env:OPENAI_API_VERSION= <your aoai api version>
 $Env:AZURE_DEPLOYMENT= <your aoai deployment name for chat>
 $Env:AZURE_OPENAI_EMBEDDING_DEPLOYMENT= <your aoai deployment name for embedding>
+$Env:ELASTICSEARCH_ENDPOINT= <Your Elastic Search Endpoint>
+$Env:ELASTICSEARCH_API_KEY= <Your Elastic Search API>
 ```
 
 3. Now try to run it on your local
@@ -41,5 +41,25 @@ $Env:AZURE_OPENAI_EMBEDDING_DEPLOYMENT= <your aoai deployment name for embedding
 1. you can mention your index in `input` to tell agent to use search tool.
 e.g. ![alt text](image.png)![alt text](image-1.png)
 
-## deploy to MIR
- TODO: working on the script that can deploy to MIR.
+## deploy to MIR using azd
+ 
+ 1. set more environment variables
+
+ ```ps1
+$Env:AZURE_SUBSCRIPTION_ID= <Your AZURE_SUBSCRIPTION_ID>
+$Env:AZURE_RESOURCE_GROUP= <Your AZURE_RESOURCE_GROUP>
+$Env:AZURE_WORKSPACE_NAME=<Your AZURE_WORKSPACE_NAME>
+$Env:AZUREAI_ENDPOINT_NAME=<Your AZUREAI_ENDPOINT_NAME>
+$Env:AZUREAI_DEPLOYMENT_NAME=<Your AZUREAI_DEPLOYMENT_NAME>
+ ```
+
+2. Do azd initiation.
+`azd init` under the main folder.
+
+3. Deploy to MIR
+`azd up` under the main folder.
+
+4. Talk to your agent
+please take the `validate_deployment.ipynb` as reference.
+
+ 

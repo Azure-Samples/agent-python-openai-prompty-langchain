@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/wabrez/ai-service-targets/schemas/alpha/azure.yaml.json
+name: agent-python-openai-prompty-langchain
+metadata:
+  template: agent-python-openai-prompty-langchain@0.0.1-beta
+# ################################################################
+# Uncomment the following section and bring your AI code to life.
+# Then, use `azd deploy` to deploy your project to Azure.
+# ################################################################
+services:
+  chat:
+    host: ai.endpoint
+    language: python
+    config:
+      workspace: ${AZURE_WORKSPACE_NAME}
+      deployment:
+        path: deployment/langchain-deployment.yaml
+        overrides:
+          environment_variables.PRT_CONFIG_OVERRIDE: deployment.subscription_id=${AZURE_SUBSCRIPTION_ID},deployment.resource_group=${AZURE_RESOURCE_GROUP},deployment.workspace_name=${AZURE_WORKSPACE_NAME},deployment.endpoint_name=${AZUREAI_ENDPOINT_NAME},deployment.deployment_name=${AZUREAI_DEPLOYMENT_NAME}
+          environment_variables.AZURE_OPENAI_ENDPOINT: ${AZURE_OPENAI_ENDPOINT}
+          environment_variables.OPENAI_API_VERSION: ${OPENAI_API_VERSION}
+          environment_variables.AZURE_DEPLOYMENT: ${AZURE_DEPLOYMENT}
+          environment_variables.AZURE_OPENAI_EMBEDDING_DEPLOYMENT: ${AZURE_OPENAI_EMBEDDING_DEPLOYMENT}
+          environment_variables.ELASTICSEARCH_ENDPOINT: ${ELASTICSEARCH_ENDPOINT}
+          environment_variables.ELASTICSEARCH_API_KEY: ${ELASTICSEARCH_API_KEY}
