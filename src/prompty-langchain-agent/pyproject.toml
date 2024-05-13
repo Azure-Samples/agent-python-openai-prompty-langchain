@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "test-app"
+name = "prompty-langchain-agent"
 version = "0.1.0"
 description = ""
 authors = ["Chuyuan Qu <chuyuanqu@microsoft.com>"]
@@ -20,6 +20,7 @@ langchain-elasticsearch = "^0.1.3"
 tiktoken = "^0.6.0"
 azure-identity = "^1.16.0"
 azure-cli = "^2.60.0"
+langchain-prompty = "^0.0.1"
 
 
 [tool.poetry.group.dev.dependencies]

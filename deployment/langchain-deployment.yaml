@@ -1,6 +1,6 @@
 $schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
 model:
-  path: ../src/test-app
+  path: ../src/prompty-langchain-agent
 environment: azureml://registries/azureml/environments/minimal-app-quickstart/labels/latest
 instance_type: Standard_F2s_v2
 instance_count: 2
