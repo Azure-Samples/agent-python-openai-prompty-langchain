@@ -15,7 +15,7 @@ langserve = {extras = ["server"], version = ">=0.0.30"}
 pydantic = "^2.6.1"
 openai-functions-agent = {path = "packages/openai-functions-agent", develop = true}
 python-dotenv = "^1.0.1"
-jinja2 = "^3.1.3"
+jinja2 = "^3.1.4"
 langchain-elasticsearch = "^0.1.3"
 tiktoken = "^0.6.0"
 azure-identity = "^1.16.0"
