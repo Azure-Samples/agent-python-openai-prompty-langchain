@@ -11,14 +11,15 @@ services:
     host: ai.endpoint
     language: python
     config:
-      workspace: ${AZURE_WORKSPACE_NAME}
+      workspace: ${AZUREAI_PROJECT_NAME}
       deployment:
         path: deployment/langchain-deployment.yaml
         overrides:
-          environment_variables.PRT_CONFIG_OVERRIDE: deployment.subscription_id=${AZURE_SUBSCRIPTION_ID},deployment.resource_group=${AZURE_RESOURCE_GROUP},deployment.workspace_name=${AZURE_WORKSPACE_NAME},deployment.endpoint_name=${AZUREAI_ENDPOINT_NAME},deployment.deployment_name=${AZUREAI_DEPLOYMENT_NAME}
+          environment_variables.PRT_CONFIG_OVERRIDE: deployment.subscription_id=${AZURE_SUBSCRIPTION_ID},deployment.resource_group=${AZURE_RESOURCE_GROUP},deployment.workspace_name=${AZUREAI_PROJECT_NAME},deployment.endpoint_name=${AZUREAI_ENDPOINT_NAME},deployment.deployment_name=${AZUREAI_DEPLOYMENT_NAME}
           environment_variables.AZURE_OPENAI_ENDPOINT: ${AZURE_OPENAI_ENDPOINT}
-          environment_variables.OPENAI_API_VERSION: ${OPENAI_API_VERSION}
-          environment_variables.AZURE_DEPLOYMENT: ${AZURE_DEPLOYMENT}
+          environment_variables.AZURE_OPENAI_DEPLOYMENT: ${AZURE_OPENAI_DEPLOYMENT}
+          environment_variables.AZURE_DEPLOYMENT: ${AZURE_OPENAI_DEPLOYMENT}
           environment_variables.AZURE_OPENAI_EMBEDDING_DEPLOYMENT: ${AZURE_OPENAI_EMBEDDING_DEPLOYMENT}
+          environment_variables.OPENAI_API_VERSION: "2023-03-15-preview"
           environment_variables.ELASTICSEARCH_ENDPOINT: ${ELASTICSEARCH_ENDPOINT}
           environment_variables.ELASTICSEARCH_API_KEY: ${ELASTICSEARCH_API_KEY}

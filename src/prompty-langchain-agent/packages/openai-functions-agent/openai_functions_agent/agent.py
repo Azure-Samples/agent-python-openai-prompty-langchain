@@ -6,8 +6,6 @@ from langchain.tools import BaseTool, StructuredTool, tool
 from langchain.agents.output_parsers import OpenAIFunctionsAgentOutputParser
 from langchain_community.chat_models import ChatOpenAI
 from langchain_community.tools.convert_to_openai import format_tool_to_openai_function
-from langchain_community.tools.tavily_search import TavilySearchResults
-from langchain_community.utilities.tavily_search import TavilySearchAPIWrapper
 from langchain_core.messages import AIMessage, HumanMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.pydantic_v1 import BaseModel, Field
@@ -16,7 +14,7 @@ from langchain_community.document_loaders import TextLoader
 from langchain_openai import AzureOpenAIEmbeddings
 from langchain_elasticsearch import ElasticsearchStore
 import os
-from .langchain_prompty import create_chat_prompt
+from langchain_prompty import create_chat_prompt
 from langchain_text_splitters import CharacterTextSplitter
 from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 # Define the arguments schema model
@@ -60,7 +58,7 @@ elastic_search = StructuredTool.from_function(
 )
 
 llm = AzureChatOpenAI(
-    azure_deployment=os.getenv('AZURE_DEPLOYMENT'),
+    azure_deployment=os.getenv('AZURE_OPENAI_DEPLOYMENT'),
     azure_ad_token_provider=token_provider
 )
 tools = [elastic_search]
