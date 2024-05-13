@@ -98,7 +98,8 @@ We recommend using keyless authentication for this project. Read more about why 
 ## Langsmith
 
 We do support Langsmith and you can follow their doc make it work.
-![langsmith](image-2.png)
+
+![langsmith](images/image-2.png)
 
 [Get started with LangSmith](https://docs.smith.langchain.com/
 )
