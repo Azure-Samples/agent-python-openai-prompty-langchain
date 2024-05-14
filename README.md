@@ -39,6 +39,9 @@ This project framework provides the following features:
 
 Once you have an Azure account you have two options for setting up this project. The easiest way to get started is GitHub Codespaces, since it will setup all the tools for you, but you can also set it up [locally]() if desired.
 
+### Security requirements
+The Elastic Search tool does not support Microsoft Managed Identity now. It is recommended to use [Azure Key Vault](https://azure.microsoft.com/en-us/products/key-vault/) to secure your API keys.
+
 ### Local Environment 
 
 - Install [azd](https://aka.ms/install-azd)
