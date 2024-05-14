@@ -2710,22 +2710,6 @@ openai = ">=1.10.0,<2.0.0"
 tiktoken = ">=0.5.2,<1"
 
 [[package]]
-name = "langchain-prompty"
-version = "0.0.1"
-description = "An integration package connecting Prompty and LangChain"
-optional = false
-python-versions = "<4.0,>=3.8.1"
-files = [
-    {file = "langchain_prompty-0.0.1-py3-none-any.whl", hash = "sha256:7fe3e5eb8032be3eccb7af4011e107a893ab244c6e0318faf6b135dc417a40da"},
-    {file = "langchain_prompty-0.0.1.tar.gz", hash = "sha256:5ba29da5d2cb12fbbd3426a16311091d60f63fe94286a1ca8307e367c510d3b5"},
-]
-
-[package.dependencies]
-langchain-core = ">=0.1.52,<0.2.0"
-pyyaml = ">=6.0.1,<7.0.0"
-types-pyyaml = ">=6.0.12.20240311,<7.0.0.0"
-
-[[package]]
 name = "langchain-text-splitters"
 version = "0.0.1"
 description = "LangChain text splitting utilities"
@@ -4250,17 +4234,6 @@ doc = ["cairosvg (>=2.5.2,<3.0.0)", "mdx-include (>=1.4.1,<2.0.0)", "mkdocs (>=1
 test = ["black (>=22.3.0,<23.0.0)", "coverage (>=6.2,<7.0)", "isort (>=5.0.6,<6.0.0)", "mypy (==0.971)", "pytest (>=4.4.0,<8.0.0)", "pytest-cov (>=2.10.0,<5.0.0)", "pytest-sugar (>=0.9.4,<0.10.0)", "pytest-xdist (>=1.32.0,<4.0.0)", "rich (>=10.11.0,<14.0.0)", "shellingham (>=1.3.0,<2.0.0)"]
 
 [[package]]
-name = "types-pyyaml"
-version = "6.0.12.20240311"
-description = "Typing stubs for PyYAML"
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "types-PyYAML-6.0.12.20240311.tar.gz", hash = "sha256:a9e0f0f88dc835739b0c1ca51ee90d04ca2a897a71af79de9aec5f38cb0a5342"},
-    {file = "types_PyYAML-6.0.12.20240311-py3-none-any.whl", hash = "sha256:b845b06a1c7e54b8e5b4c683043de0d9caf205e7434b3edc678ff2411979b8f6"},
-]
-
-[[package]]
 name = "typing-extensions"
 version = "4.11.0"
 description = "Backported and Experimental Type Hints for Python 3.8+"
@@ -4533,4 +4506,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11,<3.13"
-content-hash = "d10e590947ab7a41e8d913bdaadc2ac5899f7cf91b3ab2b5f3afbe0c99aa3445"
+content-hash = "d63173c04e3d2802203183232e3625cab1521f84c5eda50d41e870c074900ce7"
