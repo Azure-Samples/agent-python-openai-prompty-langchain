@@ -1,5 +1,5 @@
 # Langchain+Prompty+ElasticSearch
-In this sample, we utilize Azure's new Promptly tool, Langchain, and Elasticsearch to build a large language model (LLM) search agent. This agent with Retrieval-Augmented Generation (RAG) technologyis is capable of answering user questions based on the provided data by integrating real-time information retrieval with generative responses.
+In this sample, we utilize the new Promptly tool, Langchain, and Elasticsearch to build a large language model (LLM) search agent. This agent with Retrieval-Augmented Generation (RAG) technologyis is capable of answering user questions based on the provided data by integrating real-time information retrieval with generative responses.
 # Langchain+Prompty+ElasticSearch
  This sample uses Azure's new Promptly tool, Langchain, and Elasticsearch to build a large language model (LLM) search agent capable of answering user questions based on the provided data. It leverages Retrieval-Augmented Generation (RAG) to enhance the agent's response capabilities.
 
