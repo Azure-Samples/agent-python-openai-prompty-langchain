@@ -1,5 +1,8 @@
 ---
 name: Basic Prompt
+template:
+   type: mustache
+   parser: prompty
 description: A basic prompt that uses the GPT-3 chat API to answer questions
 authors:
   - author_1

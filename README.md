@@ -38,10 +38,33 @@ This project framework provides the following features:
 
 
 Once you have an Azure account you have two options for setting up this project. The easiest way to get started is GitHub Codespaces, since it will setup all the tools for you, but you can also set it up [locally]() if desired.
+### Elasticsearch Account
+Go to [Elasticsearch](https://www.elastic.co/elasticsearch) and create your account if you don't have one. For this quickstart template, please create a index in your Elasticsearch account named `langchain-test-index`. Keep your Elasticsearch encoded API key in a safe place and you will need to pass it for this template.
 
 ### Security requirements
 The Elastic Search tool does not support Microsoft Managed Identity now. It is recommended to use [Azure Key Vault](https://azure.microsoft.com/en-us/products/key-vault/) to secure your API keys.
+### Project setup
 
+You have a few options for setting up this project.
+The easiest way to get started is GitHub Codespaces, since it will setup all the tools for you,
+but you can also [set it up locally](#local-environment) if desired.
+
+#### GitHub Codespaces
+
+You can run this repo virtually by using GitHub Codespaces, which will open a web-based VS Code in your browser:
+
+[![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=for-the-badge&label=GitHub+Codespaces&message=Open&color=brightgreen&logo=github)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=599293758&machine=standardLinux32gb&devcontainer_path=.devcontainer%2Fdevcontainer.json&location=WestUs2)
+
+Once the codespace opens (this may take several minutes), open a terminal window.
+
+#### VS Code Dev Containers
+
+A related option is VS Code Dev Containers, which will open the project in your local VS Code using the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers):
+
+1. Start Docker Desktop (install it if not already installed)
+1. Open the project:
+    [![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/azure-samples/azure-search-openai-demo)
+1. In the VS Code window that opens, once the project files show up (this may take several minutes), open a terminal window.
 ### Local Environment 
 
 - Install [azd](https://aka.ms/install-azd)
@@ -80,8 +103,56 @@ Enter a name that will be used for the resource group. This will create a new fo
 please take the `validate_deployment.ipynb` as reference.
  
 ### Local Development
-Describe how to run and develop the app locally
- 
+#### Prerequisite
+- A valid Elasticsearch account
+- An Azure OpenAI endpoint with two deployments: one GPT deployment for chat and one embedding deployment for embedding.
+- Assign yourself `Cognitive Services User` role to the corresponding Azure AI services.
+- A created index in your Elasticsearch account consistent with the index name in `src\prompty-langchain-agent\packages\openai-functions-agent\openai_functions_agent\agent.py`. By default it is called `langchain-test-index`
+- Put the data you want Elasticsearch work with in `src\prompty-langchain-agent\packages\openai-functions-agent\openai_functions_agent\data` folder and change the data file name in `agent.py` (change the `local_load` settings as well)
+- Create and save your Elasticsearch api key.
+
+#### Dependency requirements
+- Python=3.11
+- poetry==1.6.1
+
+#### Go to `src\prompty-langchain-agent` folder and do followings:
+
+1. use poetry to install all dependency for the app.
+
+`poetry install --no-interaction --no-ansi`
+
+2. use poetry to install all dependency for the packages:
+
+Go to  `packages\openai-functions-agent` and run:
+`poetry install --no-interaction --no-ansi`
+
+3. set environment variables
+
+```
+AZURE_OPENAI_ENDPOINT= <your aoai endpoint>
+OPENAI_API_VERSION= <your aoai api version>
+AZURE_OPENAI_DEPLOYMENT= <your aoai deployment name for chat>
+AZURE_OPENAI_EMBEDDING_DEPLOYMENT= <your aoai deployment name for embedding>
+ELASTICSEARCH_ENDPOINT = <your ELASTICSEARCH ENDPOINT>
+ELASTICSEARCH_API_KEY= <Your encoded ELASTICSEARCH API key>
+```
+
+4. Now try to run it on your local
+`langchian serve`
+
+1. you can go to http://localhost:8000/openai-functions-agent/playground/ to test.
+
+1. you can mention your index in `input` to tell agent to use search tool.
+
+## Clean up
+
+To clean up all the resources created by this sample:
+
+1. Run `azd down`
+2. When asked if you are sure you want to continue, enter `y`
+3. When asked if you want to permanently delete the resources, enter `y`
+
+The resource group and all the resources will be deleted.
 ## Costs
 You can estimate the cost of this project's architecture with [Azure's pricing calculator](https://azure.microsoft.com/pricing/calculator/)
  
@@ -102,7 +173,7 @@ We recommend using keyless authentication for this project. Read more about why 
 
 We do support Langsmith and you can follow their doc make it work.
 
-![langsmith](images/image-2.png)
-
 [Get started with LangSmith](https://docs.smith.langchain.com/
 )
+
+![langsmith](images/image-2.png)
