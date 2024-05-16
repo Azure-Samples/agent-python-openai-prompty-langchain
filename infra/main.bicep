@@ -31,8 +31,6 @@ param logAnalyticsWorkspaceName string = ''
 param endpointName string = ''
 @description('Id of the user or app to assign application roles')
 param principalId string = ''
-@description('The name of the azd service to use for the machine learning endpoint')
-param endpointServiceName string = 'prompty-langchain-agent'
 
 param useContainerRegistry bool = true
 param useAppInsights bool = true
@@ -109,7 +107,7 @@ module machineLearningEndpoint './core/host/ml-online-endpoint.bicep' = {
     name: !empty(endpointName) ? endpointName : 'mloe-${resourceToken}'
     location: location
     tags: tags
-    serviceName: endpointServiceName
+    serviceName: environmentName
     aiHubName: ai.outputs.hubName
     aiProjectName: ai.outputs.projectName
     keyVaultName: ai.outputs.keyVaultName
