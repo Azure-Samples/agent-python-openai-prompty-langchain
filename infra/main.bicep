@@ -43,8 +43,10 @@ var tags = { 'azd-env-name': environmentName }
 var deploymentName =  'gpt-35-turbo'
 
 // Organize resources in a resource group
-resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' existing= {
-  name: resourceGroupName
+resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
+  name: !empty(resourceGroupName) ? resourceGroupName : 'rg-${environmentName}'
+  location: location
+  tags: tags
 }
 
 module ai './core/host/ai-environment.bicep' = {
