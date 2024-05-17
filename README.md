@@ -90,16 +90,16 @@ Note that this command will initialize a git repository, so you do not need to c
 azd auth login
 ```
 3. Set following environment variables:
-`AZURE_RESOURCE_GROUP`, `ELASTICSEARCH_ENDPOINT` and `ELASTICSEARCH_API_KEY`
-3. Create a new azd environment:
+`ELASTICSEARCH_ENDPOINT` and `ELASTICSEARCH_API_KEY`
+1. Create a new azd environment:
 ```
 azd env new
 ```
 Enter a name that will be used for the resource group. This will create a new folder in the .azure folder, and set it as the active environment for any calls to azd going forward.
 
-4. Provision and deploy the project to Azure: `azd up`
-4. Set up CI/CD with `azd pipeline config`
-4. Talk to your agent: 
+1. Provision and deploy the project to Azure: `azd up`
+2. Set up CI/CD with `azd pipeline config`
+3. Talk to your agent: 
 please take the `validate_deployment.ipynb` as reference.
  
 ### Local Development

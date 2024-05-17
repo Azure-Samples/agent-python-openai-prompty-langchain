@@ -24,45 +24,48 @@ class SearchQueryArgs(BaseModel):
 token_provider = get_bearer_token_provider(
         DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default"
     )
-
-def prepare_search_client(local_load: bool = False):
-    embeddings = AzureOpenAIEmbeddings(azure_endpoint=os.getenv('AZURE_OPENAI_ENDPOINT'), deployment=os.getenv('AZURE_OPENAI_EMBEDDING_DEPLOYMENT'), azure_ad_token_provider=token_provider)
-    index_name = "langchain-test-index"
-    if local_load:
-        loader = TextLoader(os.path.join(os.path.dirname(os.path.abspath(__file__)), './data/documents.json'))
-        documents = loader.load()
-        text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
-        docs = text_splitter.split_documents(documents)
-        db = ElasticsearchStore.from_documents(index_name=index_name, documents=docs, embedding=embeddings, es_url=os.getenv('ELASTICSEARCH_ENDPOINT'), es_api_key=os.getenv('ELASTICSEARCH_API_KEY'))
-    else:
-        db = ElasticsearchStore(
-            es_url=os.getenv('ELASTICSEARCH_ENDPOINT'),
-            index_name="test_index",
-            embedding=embeddings,
-            es_api_key=os.getenv('ELASTICSEARCH_API_KEY')
-        )
-    db.client.indices.refresh(index=index_name)
-    return db
-
-docsearch = prepare_search_client(True)
-
-def elastic_search_tool(query:str):
-    results = docsearch.similarity_search(query)
-    return results[0].page_content
-
-elastic_search = StructuredTool.from_function(
-    func=elastic_search_tool,
-    name="elastic_search",
-    description="useful for when you need to answer questions about current doc",
-    args_schema=SearchQueryArgs
-)
-
 llm = AzureChatOpenAI(
     azure_deployment=os.getenv('AZURE_OPENAI_DEPLOYMENT'),
     azure_ad_token_provider=token_provider
 )
-tools = [elastic_search]
-llm_with_tools = llm.bind(functions=[format_tool_to_openai_function(t) for t in tools])
+
+if os.getenv('ELASTICSEARCH_ENDPOINT') is not None and os.getenv('ELASTICSEARCH_API_KEY') is not None:
+    def prepare_search_client(local_load: bool = False):
+        embeddings = AzureOpenAIEmbeddings(azure_endpoint=os.getenv('AZURE_OPENAI_ENDPOINT'), deployment=os.getenv('AZURE_OPENAI_EMBEDDING_DEPLOYMENT'), azure_ad_token_provider=token_provider)
+        index_name = "langchain-test-index"
+        if local_load:
+            loader = TextLoader(os.path.join(os.path.dirname(os.path.abspath(__file__)), './data/documents.json'))
+            documents = loader.load()
+            text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+            docs = text_splitter.split_documents(documents)
+            db = ElasticsearchStore.from_documents(index_name=index_name, documents=docs, embedding=embeddings, es_url=os.getenv('ELASTICSEARCH_ENDPOINT'), es_api_key=os.getenv('ELASTICSEARCH_API_KEY'))
+        else:
+            db = ElasticsearchStore(
+                es_url=os.getenv('ELASTICSEARCH_ENDPOINT'),
+                index_name="test_index",
+                embedding=embeddings,
+                es_api_key=os.getenv('ELASTICSEARCH_API_KEY')
+            )
+        db.client.indices.refresh(index=index_name)
+        return db
+
+    docsearch = prepare_search_client(True)
+
+    def elastic_search_tool(query:str):
+        results = docsearch.similarity_search(query)
+        return results[0].page_content
+
+    elastic_search = StructuredTool.from_function(
+        func=elastic_search_tool,
+        name="elastic_search",
+        description="useful for when you need to answer questions about current doc",
+        args_schema=SearchQueryArgs
+    )
+    tools = [elastic_search]
+    llm_with_tools = llm.bind(functions=[format_tool_to_openai_function(t) for t in tools])
+else:
+    tools = []
+    llm_with_tools = llm
 
 prompt = create_chat_prompt(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'basic_chat.prompty'))
 
