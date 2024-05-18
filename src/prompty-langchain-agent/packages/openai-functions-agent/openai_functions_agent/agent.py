@@ -29,7 +29,7 @@ llm = AzureChatOpenAI(
     azure_ad_token_provider=token_provider
 )
 
-if os.getenv('ELASTICSEARCH_ENDPOINT') is not None and os.getenv('ELASTICSEARCH_API_KEY') is not None:
+if os.getenv('ELASTICSEARCH_ENDPOINT') is not None and os.getenv('ELASTICSEARCH_API_KEY') is not None and len(os.getenv('ELASTICSEARCH_ENDPOINT')) > 0 and len(os.getenv('ELASTICSEARCH_API_KEY')) > 0:
     def prepare_search_client(local_load: bool = False):
         embeddings = AzureOpenAIEmbeddings(azure_endpoint=os.getenv('AZURE_OPENAI_ENDPOINT'), deployment=os.getenv('AZURE_OPENAI_EMBEDDING_DEPLOYMENT'), azure_ad_token_provider=token_provider)
         index_name = "langchain-test-index"

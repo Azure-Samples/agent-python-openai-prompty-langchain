@@ -16,6 +16,6 @@ done
 python --version
 # Install any dependencies (if not already installed)
 poetry install --no-interaction --no-ansi
-
+printenv
 # Start the Uvicorn server
 exec uvicorn app.server:app --host 0.0.0.0 --port 5001
