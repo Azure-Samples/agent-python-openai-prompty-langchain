@@ -3,7 +3,7 @@ model:
   path: ../src/prompty-langchain-agent
 environment: azureml://registries/azureml/environments/minimal-app-quickstart/labels/latest
 instance_type: Standard_F2s_v2
-instance_count: 2
+instance_count: 1
 scale_settings:
   type: default
 request_settings:
