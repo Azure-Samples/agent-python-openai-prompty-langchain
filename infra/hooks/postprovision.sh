@@ -14,6 +14,9 @@ echo subscriptionId: $subscriptionId
 aiProjectName=$AZUREAI_PROJECT_NAME
 echo aiProjectName: $aiProjectName
 
+aiEndpointName=$AZUREAI_ENDPOINT_NAME
+echo aiEndpointName: $aiEndpointName
+
 
 # Ensure all required environment variables are set
 if [ -z "$resourceGroupName" ] || [ -z "$openAiService" ] || [ -z "$subscriptionId" ] || [ -z "$aiProjectName" ]; then
@@ -23,18 +26,15 @@ if [ -z "$resourceGroupName" ] || [ -z "$openAiService" ] || [ -z "$subscription
 fi
 
 # Retrieve the keys
-apiKey=$(az cognitiveservices account keys list --name $openAiService --resource-group $resourceGroupName --query key1 --output tsv)
 
 # Set the environment variables using azd env set
-azd env set AZURE_OPENAI_API_KEY $apiKey
-azd env set AZURE_OPENAI_KEY $apiKey
-azd env set AZURE_OPENAI_API_VERSION 2023-03-15-preview
-azd env set AZURE_OPENAI_CHAT_DEPLOYMENT gpt-35-turbo
+azd env set --name AZURE_RESOURCE_GROUP --value $resourceGroupName
+azd env set --name AZURE_OPENAI_NAME --value $openAiService
+azd env set --name AZURE_SUBSCRIPTION_ID --value $subscriptionId
+azd env set --name AZUREAI_PROJECT_NAME --value $aiProjectName
+azd env set --name AZUREAI_ENDPOINT_NAME --value $aiEndpointName
 
 # Output environment variables to .env file using azd env get-values
-azd env get-values > ./src/summarizationapp/.env
+azd env get-values > ./src/.env
 
 echo "Script execution completed successfully."
-
-echo 'Installing dependencies from "requirements.txt"'
-python -m pip install -r src/summarizationapp/requirements.txt
