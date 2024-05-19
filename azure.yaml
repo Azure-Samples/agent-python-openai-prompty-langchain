@@ -2,18 +2,6 @@
 name: agent-python-openai-prompty-langchain
 metadata:
   template: agent-python-openai-prompty-langchain@0.0.1-beta
-hooks:
-  postprovision:
-    posix:
-      shell: sh
-      continueOnError: false
-      interactive: true
-      run: infra/hooks/postprovision.sh
-    windows:
-      shell: pwsh
-      continueOnError: false
-      interactive: true
-      run: infra/hooks/postprovision.ps1
 # ################################################################
 # Uncomment the following section and bring your AI code to life.
 # Then, use `azd deploy` to deploy your project to Azure.
