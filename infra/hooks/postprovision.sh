@@ -37,9 +37,4 @@ azd env set --name AZUREAI_ENDPOINT_NAME --value $aiEndpointName
 # Output environment variables to .env file using azd env get-values
 azd env get-values > ./src/.env
 
-echo "AZURE_RESOURCE_GROUP: $resourceGroupName"
-echo "AZURE_SUBSCRIPTION_ID: $subscriptionId"
-echo "AZUREAI_PROJECT_NAME: $aiProjectName"
-echo "AZUREAI_ENDPOINT_NAME: $aiEndpointName"
-
 echo "Script execution completed successfully."

@@ -34,9 +34,5 @@ azd env set AZUREAI_ENDPOINT_NAME $aiEndpointNAme
 azd env get-values > ./src/.env
 
 Write-Host "Script execution completed successfully."
-Write-Host "AZURE_RESOURCE_GROUP $resourceGroupName"
-Write-Host "AZURE_SUBSCRIPTION_ID $subscriptionId"
-Write-Host "AZUREAI_PROJECT_NAME $aiProjectName"
-Write-Host "AZUREAI_ENDPOINT_NAME $aiEndpointNAme"
 #Write-Host 'Installing dependencies from "requirements.txt"'
 #python -m pip install -r src/summarizationapp/requirements.txt
