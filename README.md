@@ -13,7 +13,7 @@ products:
 - azure-key-vault
 urlFragment: agent-python-openai-prompty-langchain
 name: Function Calling with Prompty, LangChain and Elastic Search
-description: Using Prompty, LangChain, and Elasticsearch with Python, this template builds an LLM search agent that leverages Retrieval-Augmented Generation (RAG) to answer user questions based on real-time information retrieval and generative responses.
+description: Using Prompty, LangChain, and Elasticsearch with Python, this sample builds an LLM search agent that leverages Retrieval-Augmented Generation (RAG) to answer user questions based on real-time information retrieval and generative responses.
 ---
 <!-- YAML front-matter schema: https://review.learn.microsoft.com/en-us/help/contribute/samples/process/onboarding?branch=main#supported-metadata-fields-for-readmemd -->
 
