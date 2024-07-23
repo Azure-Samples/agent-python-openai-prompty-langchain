@@ -31,6 +31,8 @@ param logAnalyticsWorkspaceName string = ''
 param endpointName string = ''
 @description('Id of the user or app to assign application roles')
 param principalId string = ''
+@description('Flag to decide where to create OpenAI role for current user')
+param createRoleForUser bool = true
 @description('The name of the azd deployment')
 param serviceName string = 'chat'
 
@@ -134,7 +136,7 @@ module keyVaultAccess 'core/security/keyvault-access.bicep' = {
   }
 }
 
-module userAcrRolePush 'core/security/role.bicep' = {
+module userAcrRolePush 'core/security/role.bicep' = if (createRoleForUser) {
   name: 'user-acr-role-push'
   scope: rg
   params: {
@@ -144,7 +146,7 @@ module userAcrRolePush 'core/security/role.bicep' = {
   }
 }
 
-module userAcrRolePull 'core/security/role.bicep' = {
+module userAcrRolePull 'core/security/role.bicep' = if (createRoleForUser) {
   name: 'user-acr-role-pull'
   scope: rg
   params: {
@@ -154,7 +156,7 @@ module userAcrRolePull 'core/security/role.bicep' = {
   }
 }
 
-module userRoleDataScientist 'core/security/role.bicep' = {
+module userRoleDataScientist 'core/security/role.bicep' = if (createRoleForUser) {
   name: 'user-role-data-scientist'
   scope: rg
   params: {
@@ -164,7 +166,7 @@ module userRoleDataScientist 'core/security/role.bicep' = {
   }
 }
 
-module userRoleSecretsReader 'core/security/role.bicep' = {
+module userRoleSecretsReader 'core/security/role.bicep' = if (createRoleForUser) {
   name: 'user-role-secrets-reader'
   scope: rg
   params: {
