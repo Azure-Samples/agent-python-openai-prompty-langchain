@@ -28,11 +28,11 @@ fi
 # Retrieve the keys
 
 # Set the environment variables using azd env set
-azd env set --name AZURE_RESOURCE_GROUP --value $resourceGroupName
-azd env set --name AZURE_OPENAI_NAME --value $openAiService
-azd env set --name AZURE_SUBSCRIPTION_ID --value $subscriptionId
-azd env set --name AZUREAI_PROJECT_NAME --value $aiProjectName
-azd env set --name AZUREAI_ENDPOINT_NAME --value $aiEndpointName
+azd env set AZURE_RESOURCE_GROUP $resourceGroupName
+azd env set AZURE_OPENAI_NAME $openAiService
+azd env set AZURE_SUBSCRIPTION_ID $subscriptionId
+azd env set AZUREAI_PROJECT_NAME $aiProjectName
+azd env set AZUREAI_ENDPOINT_NAME $aiEndpointName
 
 # Output environment variables to .env file using azd env get-values
 azd env get-values > ./src/.env
