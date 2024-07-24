@@ -17,7 +17,7 @@ $aiEndpointNAme = $env:AZUREAI_ENDPOINT_NAME
 Write-Host "aiEndpointNAme: $aiEndpointNAme"
 
 # Ensure all required environment variables are set
-if ([string]::IsNullOrEmpty($resourceGroupName) -or [string]::IsNullOrEmpty($subscriptionId))-or [string]::IsNullOrEmpty($aiProjectName)) {
+if ([string]::IsNullOrEmpty($resourceGroupName) -or [string]::IsNullOrEmpty($subscriptionId) -or [string]::IsNullOrEmpty($aiProjectName)) {
     Write-Host "One or more required environment variables are not set."
     Write-Host "Ensure that AZURE_RESOURCE_GROUP, AZURE_OPENAI_NAME, AZURE_SUBSCRIPTION_ID, and AZUREAI_PROJECT_NAME are set."
     exit 1
