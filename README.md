@@ -151,6 +151,9 @@ To clean up all the resources created by this sample:
 3. When asked if you want to permanently delete the resources, enter `y`
 
 The resource group and all the resources will be deleted.
+
+## Guidance
+
 ## Costs
 You can estimate the cost of this project's architecture with [Azure's pricing calculator](https://azure.microsoft.com/pricing/calculator/)
  
